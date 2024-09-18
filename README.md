@@ -16,4 +16,4 @@ El programa solo corre en la consola y esta hecho con c++ standard por lo que co
 - correr en windows: "a.exe
 
   # Versiones
-  Version 1: se agregaron clases: menu, alimentos, comidas, bebidas y postres. Se agregó main con opciones para visualizacion del menu, usando ordenamiento tipo Bubble (SICT0302: Toma decisiones). Complejidad en comentarios de bubbleSort [sorts.h] (SICT0301: Evalúa los componentes)
+Version 1: se agregaron clases: menu, alimentos, comidas, bebidas y postres. Se agregó main con opciones para visualizacion del menu, usando ordenamiento tipo Bubble (SICT0302: Toma decisiones). Complejidad en comentarios de bubbleSort [sorts.h] (SICT0301: Evalúa los componentes)
