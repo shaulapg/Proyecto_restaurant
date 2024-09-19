@@ -24,6 +24,8 @@ void Sorts<T>::swap(std::vector<T> &v, int i, int j) {
 	v[j] = aux;
 }
 
+//Peor de los casos: O(n^2)
+//Mejor de los casos: O(1)
 template <class T>
 std::vector<T> Sorts<T>::bubbleSort(const std::vector<T> &source) {
 	std::vector<T> v;
