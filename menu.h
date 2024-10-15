@@ -7,55 +7,56 @@
 #ifndef MENU_H
 #define MENU_H
 
+//Librerias
 #include <string>
 #include <iostream>
 #include <vector>
 
+//Archivo para que el menu pueda manejar los alimentos
 #include "alimentos.h"
 
+//Contador para el numero de alimentos
 int contador = 0;
+//Clase Menu
 class Menu{
+    //Atributos publicos
     public:
+    //Lista de apuntadores de los alimentos
     Alimentos * alim[50];
+    //Vectores para precios y ventas
     std::vector <float> precios;
     std::vector <int> ventas;
-    std::vector <float> precios_b;
-    std::vector <int> ventas_b;
-    std::vector <float> precios_c;
-    std::vector <int> ventas_c;
-    std::vector <float> precios_p;
-    std::vector <int> ventas_p;
 
+    //Constructor para menu (sin parametros)
     Menu(){};
 
+    //funciones
     void agrega_alimento(Alimentos *);
     void imprime_();
 };
 
+/**funcion para agregar un alimento
+ * 
+ * @param Apuntador de alimentos
+ * @return
+ */
 void Menu::agrega_alimento(Alimentos * objeto){
     if(contador < 50){
         alim[contador] = objeto;
         precios.push_back(objeto->get_precio());
         ventas.push_back(objeto->get_vendidas());
-
-        if(objeto->get_tipo() == "Bebidas"){
-            precios_b.push_back(objeto->get_precio());
-            ventas_b.push_back(objeto->get_vendidas());
-        }else if(objeto->get_tipo() == "Comidas"){
-            precios_c.push_back(objeto->get_precio());
-            ventas_c.push_back(objeto->get_vendidas());
-        } else if(objeto->get_tipo() == "Postres"){
-            precios_p.push_back(objeto->get_precio());
-            ventas_p.push_back(objeto->get_vendidas());
-        }
         contador++;
     }
 }
 
+/**funcion para imprimir
+ * 
+ * @param
+ * @return
+ */
 void Menu::imprime_(){
-    for (int i = 0; i < contador; i++){
+    for (int i = 0; i < contador; i++)
         alim[i] -> imprime();
-    }
 }
 
 #endif

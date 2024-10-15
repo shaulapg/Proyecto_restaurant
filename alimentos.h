@@ -7,64 +7,104 @@
 #ifndef ALIMENTOS_H
 #define ALIMENTOS_H
 
+//Librerias
 #include <string>
 #include <iostream>
 
+//Clase Alimentos
 class Alimentos{
+    //Atributos protegidos
     protected:
     std::string nombre, tipo;
     int vendidas, compradas;
     float precio;
 
+    //Atributos Públicos
     public:
+    //Construtor default
     Alimentos(): nombre(""), vendidas(0), precio(0), tipo(""){};
+    //Constructor con parametros definidos
     Alimentos(std::string nom, int vend, float prec, std::string tip):nombre(nom), vendidas(vend), precio(prec), tipo(tip){};
 
+    //getters y setters
     std::string get_nombre();
     int get_vendidas();
     float get_precio();
     std::string get_tipo();
 
-    void aumenta_vendidas(int);
+    //Virtual para imprimir
     virtual void imprime() = 0;
 };
 
+/**getter de nombre
+ * 
+ * @param
+ * @return nombre
+ */
 std::string Alimentos::get_nombre(){
     return nombre;
 }
 
+/**getter cantidad de ventas
+ * 
+ * @param
+ * @return ventas
+ */
 int Alimentos::get_vendidas(){
     return vendidas;
 }
 
+/**getter de precio
+ * 
+ * @param
+ * @return precio
+ */
 float Alimentos::get_precio(){
     return precio;
 }
 
+/**getter de tipo de alimento
+ * 
+ * @param
+ * @return tipo de alimento
+ */
 std::string Alimentos::get_tipo(){
     return tipo;
 }
 
-void Alimentos::aumenta_vendidas(int vend){
-    vendidas = vend;
-}
 
 
-
+//Clase Bebidas
 class Bebidas : public Alimentos{
+    //Atributos protegidos
     protected:
     std::string temperatura;
 
+    //Atributos publicos
     public:
+    //Constructor default
     Bebidas(): Alimentos(), temperatura(""){};
+    //Constructor con parametros
     Bebidas(std::string nom, int vend, float prec, std::string tip, std::string temp): Alimentos(nom, vend, prec, tip), temperatura(temp){}; 
 
+    /**getter de temperatura
+     * 
+     * @param
+     * @return temperatura
+     */
     std::string get_temperatura(){
         return temperatura;
     }
+    
+    //funcion para imprimir
     void imprime();
 };
 
+/**funcion para imprimir
+ * 
+ * @param
+ * @return
+ */
 void Bebidas::imprime(){
     std::cout << "|Nombre: " << nombre << std::endl;
     std::cout << "|Vendidos: " << vendidas << std::endl;
@@ -75,20 +115,37 @@ void Bebidas::imprime(){
 
 
 
+//Clase Alimentos
 class Postres : public Alimentos{
+    //Atributos protegidos
     protected:
     std::string sabor;
 
+    //Atributos publicos
     public:
+    //Constructor default
     Postres(): Alimentos(), sabor(""){};
+    //Constructor con parametros
     Postres(std::string nom, int vend, float prec, std::string tip, std::string sab): Alimentos(nom, vend, prec, tip), sabor(sab){}; 
 
+    /**getter de sabor
+     * 
+     * @param
+     * @return sabor
+     */
     std::string get_sabor(){
         return sabor;
     }
+
+    //funcion para imprimir
     void imprime();
 };
 
+/**funcion para imprimir
+ * 
+ * @param
+ * @return
+ */
 void Postres::imprime(){
     std::cout << "|Nombre: " << nombre << std::endl;
     std::cout << "|Vendidos: " << vendidas << std::endl;
@@ -99,20 +156,37 @@ void Postres::imprime(){
 
 
 
+//Clase Alimentos
 class Comidas : public Alimentos{
+    //Atributos Protegidos
     protected:
     std::string ingredientes;
 
+    //Atributos publicos
     public:
+    //Constructor default
     Comidas(): Alimentos(), ingredientes(""){};
+    //Constructor con parametros
     Comidas(std::string nom, int vend, float prec, std::string tip, std::string ing): Alimentos(nom, vend, prec, tip), ingredientes(ing){}; 
 
+    /**getter de ingredientes
+     * 
+     * @param
+     * @return ingredientes
+     */
     std::string get_ingredientes(){
         return ingredientes;
     }
+
+    //funcion para imprimir
     void imprime();
 };
 
+/**funcion para imprimir
+ * 
+ * @param
+ * @return
+ */
 void Comidas::imprime(){
     std::cout << "|Nombre: " << nombre << std::endl;
     std::cout << "|Vendidos: " << vendidas << std::endl;
