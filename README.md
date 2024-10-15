@@ -4,16 +4,19 @@ Un restaurante tiene una base de datos de su menu. En este menu se clasifican lo
 # Funcionalidad
 El programa permite al usuario elegir entre ver el menu, agregar un alimento y ver los productos acomodados de forma ascendente, ya sea por precio o por unidades vendidas. En esta ultima opcion se puede elegir entre cuatro opciones: ver todos los productos, ver solo postres, comidas o bebidas.
 
-Este programa cuenta con 5 clases, las cuales son:
+Este programa cuenta con 7 clases, las cuales son:
 - Alimentos: calse virtual, clase que hereda a bebidas, comidas y postres
 - Comidas, Bebidas y Postres: tipos de objetos disponibles para el menu
 - Menu: Clase para acceder a las demás
-- 
+- Sorts: Clase con merge sort para poder ordenar datos
+- BST: Para generar arreglos y buscar información de manera óptima
+  
 # Consideraciones
 El programa solo corre en la consola y esta hecho con c++ standard por lo que corre en todos los sistemas operativos
 - compilar con: "g++ alimentos.h sorts.h menu.h main.cpp"
 - correr en linux: "/a.out"
 - correr en windows: "a.exe
+
 NO SE PUEDE REPETIR UN DATO, ES DECIR, SI YA HAY UN ARTICULO CON PRECIO DE $20, NO SE PUEDE AGREGAR OTRO CON PRECIO DE $20
 
   # Versiones
