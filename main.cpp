@@ -13,8 +13,11 @@
 //Variables
 std::string nom, ext, nam;
 bool continua = true, enc;
-int opcion, op, ven;
+int opcion, op, ven, size = 0;
 float prec, busc;
+
+Ali * a;
+Alimentos * al;
 
 //Sorts para enteros y floats
 Sorts<int> sorts;
@@ -42,109 +45,53 @@ int ordenapor(){
 //Inicio del main
 int main(){
     
-    //Objeto menu para manejo del restaurant
-    Menu menu;
-    //BST para ventas y precios
+        Menu menu;
+
+    // BST para ventas y precios
     BST<int> vbst;
     BST<float> pbst;
 
-    //Creador de apuntadores para bebidas
-    Alimentos * limonada = new Bebidas("Limonada", 10, 25.00, "Bebidas", "Fria");
-    Alimentos * malteada = new Bebidas("Malteada", 15, 50.00, "Bebidas", "Fria");
-    Alimentos * jamaica = new Bebidas("Jamaica", 8, 26.00, "Bebidas", "Fria");
-    Alimentos * horchata = new Bebidas("Horchata", 7, 27.00, "Bebidas", "Fria");
-    Alimentos * agua = new Bebidas("Agua", 5, 10.00, "Bebidas", "Al Tiempo");
-    
-    //Agregar apuntadores a la lista
-    menu.agrega_alimento(limonada);
-    menu.agrega_alimento(malteada);
-    menu.agrega_alimento(jamaica);
-    menu.agrega_alimento(horchata);
-    menu.agrega_alimento(agua);
+    std::string archivo = "platillos.csv";
+    int size = 0;
 
-    //Agregar bebidas a la lista de vendidos (BST)
-    vbst.add("Limonada", limonada->get_vendidas());
-    vbst.add("Malteada", malteada->get_vendidas());
-    vbst.add("Jamaica", jamaica->get_vendidas());
-    vbst.add("Horchata", horchata->get_vendidas());
-    vbst.add("Agua", agua->get_vendidas());
+    // Leer el archivo CSV
+    Ali* alimen = Ali::leerCSV(archivo, size);
 
-    //Agregar bebidas a la lista de precios (BST)
-    pbst.add("Limonada", limonada->get_precio());
-    pbst.add("Malteada", malteada->get_precio());
-    pbst.add("Jamaica", jamaica->get_precio());
-    pbst.add("Horchara", horchata->get_precio());
-    pbst.add("Agua", agua->get_precio());
+    if (alimen == nullptr) {
+        std::cerr << "Error al leer el archivo CSV." << std::endl;
+        return 1;
+    }
 
+    //Cubrir todos los objetos
+    for (int i = 0; i < size; i++) {
+        Alimentos* al = nullptr;
 
+        // Comprobar el tipo de cada alimento y crear el objeto adecuado
+        if (alimen[i].get_tipo() == "Bebidas") {
+            al = new Bebidas(alimen[i].get_nombre(), alimen[i].get_vendidas(), alimen[i].get_precio(), alimen[i].get_tipo(), alimen[i].get_extra());
+        } else if (alimen[i].get_tipo() == "Comidas") {
+            al = new Comidas(alimen[i].get_nombre(), alimen[i].get_vendidas(), alimen[i].get_precio(), alimen[i].get_tipo(), alimen[i].get_extra());
+        } else if (alimen[i].get_tipo() == "Postres") {
+            al = new Postres(alimen[i].get_nombre(), alimen[i].get_vendidas(), alimen[i].get_precio(), alimen[i].get_tipo(), alimen[i].get_extra());
+        }
 
-    //Creador de apuntadores para comidas
-    Alimentos * sopa = new Comidas("Sopa", 2, 40.00, "Comidas", "Pollo, Puerco, Azteca");
-    Alimentos * milanesa = new Comidas("Milanesa", 3, 35.00, "Comidas","Pollo, Pescado");
-    Alimentos * torta = new Comidas("Torta", 1, 28.00, "Comidas","Jamon, Pambazo, Guajolota");
-    Alimentos * tacos = new Comidas("Tacos", 24, 8.00, "Comidas","Barbacoa, Pastor, Tripa");
-    Alimentos * hamburguesa = new Comidas("Hamburguesa", 6, 30.00, "Comidas","N/A");
-    
-    //Agregar apuntadores a la lista
-    menu.agrega_alimento(sopa);
-    menu.agrega_alimento(milanesa);
-    menu.agrega_alimento(torta);
-    menu.agrega_alimento(tacos);
-    menu.agrega_alimento(hamburguesa);
+        if (al != nullptr) {
+            menu.agrega_alimento(al);  // Agregar el alimento al menú
+            vbst.add(al->get_nombre(), al->get_vendidas());  // Agregar a BST de ventas
+            pbst.add(al->get_nombre(), al->get_precio());  // Agregar a BST de precios
+        }
+    }
 
-    //Agregar comidas a la lista de vendidos (BST)
-    vbst.add("Sopa", sopa->get_vendidas());
-    vbst.add("Milanesa", milanesa->get_vendidas());
-    vbst.add("Torta", torta->get_vendidas());
-    vbst.add("Tacos", tacos->get_vendidas());
-    vbst.add("Hamburguesa", hamburguesa->get_vendidas());
-
-    //Agregar comidas a la lista de precios (BST)
-    pbst.add("Sopa", sopa->get_precio());
-    pbst.add("Milanesa", milanesa->get_precio());
-    pbst.add("Torta", torta->get_precio());
-    pbst.add("Tacos", tacos->get_precio());
-    pbst.add("Hamburguesa", hamburguesa->get_precio());
-
-
-
-    //Creador de apuntadores para postres
-    Alimentos * helado = new Postres("Helado", 0, 22.00, "Postres", "Chocolate, Fresa, Vainilla");
-    Alimentos * pay = new Postres("Pay", 4, 21.00, "Postres","Limon, Frutos Rojos, Zarzamora");
-    Alimentos * pastel = new Postres("Rebanada de pastel", 11, 20.00, "Postres","Chocolate, Tres Leches, Cajeta");
-    Alimentos * churros = new Postres("Churros", 12, 29.00, "Postres","Natural");
-    Alimentos * bunuelos = new Postres("Bunuelos", 5, 15.00, "Postres","Natural");
-
-    //Agregar apuntadores a la lista
-    menu.agrega_alimento(helado);
-    menu.agrega_alimento(pay);
-    menu.agrega_alimento(pastel);
-    menu.agrega_alimento(churros);
-    menu.agrega_alimento(bunuelos);
-
-    //Agregar postres a la lista de vendidos (BST)
-    vbst.add("Helado", helado->get_vendidas());
-    vbst.add("Pay", pay->get_vendidas());
-    vbst.add("Pastel", pastel->get_vendidas());
-    vbst.add("Churros", churros->get_vendidas());
-    vbst.add("Bunuelos", bunuelos->get_vendidas());
-
-    //Agregar postres a la lista de precios (BST)
-    pbst.add("Helado", helado->get_precio());
-    pbst.add("Pay", pay->get_precio());
-    pbst.add("Pastel", pastel->get_precio());
-    pbst.add("Churros", churros->get_precio());
-    pbst.add("Bunuelos", bunuelos->get_precio());
-
+    // Liberar memoria
+    delete[] alimen;
 
     //Vector ordenado de ventas
     std::vector <int> v = sorts.mergeSort(menu.ventas);
     //Vector ordenado de precios
     std::vector <float> p = fsorts.mergeSort(menu.precios);
 
-
     //While para continuar hasta que el usuario decida salir
-    while (continua == true){
+    while (continua){
         std::cout << std::endl;
         //Menu principal
         std::cout << "Menu principal" << std::endl;
@@ -168,136 +115,109 @@ int main(){
             break;
             case 2:
                 //Menu para elegir que agregar
-                op = ordenapor();
+                std::cout << "Seccion" << std::endl;
+                std::cout << "1. Bebidas" << std::endl;
+                std::cout << "2. Comidas" << std::endl;
+                std::cout << "3. Postres" << std::endl;
+                std::cout << "Seleccione una opcion: ";
+                std::cin >> op;
+                std::cout << std::endl;
 
-                //Tomar datos para agregar Bebida
-                if (op == 1){
-                    std::cout << "Nombre del alimento: ";
-                    std::cin >> nom;
-                    std::cout << "Vendidos hasta el momento: ";
-                    std::cin >> ven;
-                    std::cout << "Precio: ";
-                    std::cin >> prec;
-                    std::cout << "Temperatura: ";
-                    std::cin >> ext;
-                    Alimentos * aux  = new Bebidas(nom, ven, prec, "Bebidas", ext);
-                    //Agregar el bebida al menu, lista de venta y lista de compras
-                    menu.agrega_alimento(aux);
-                    vbst.add(nom, ven);
-                    pbst.add(nom, prec);
-                //Tomar datos para agregar Comida
-                } else if (op == 2){
-                    std::cout << "Nombre del alimento: ";
-                    std::cin >> nom;
-                    std::cout << "Vendidos hasta el momento: ";
-                    std::cin >> ven;
-                    std::cout << "Precio: ";
-                    std::cin >> prec;
-                    std::cout << "Tipos: ";
-                    std::cin >> ext;
-                    Alimentos * aux  = new Comidas(nom, ven, prec, "Comidas", ext);
-                    //Agregar el comida al menu, lista de venta y lista de compras
-                    menu.agrega_alimento(aux);
-                    vbst.add(nom, ven);
-                    pbst.add(nom, prec);
-                //Tomar datos para agregar Postre
-                } else if (op == 3){
-                    std::cout << "Nombre del alimento: ";
-                    std::cin >> nom;
-                    std::cout << "Vendidos hasta el momento: ";
-                    std::cin >> ven;
-                    std::cout << "Precio: ";
-                    std::cin >> prec;
-                    std::cout << "Sabores: ";
-                    std::cin >> ext;
-                    Alimentos * aux  = new Postres(nom, ven, prec, "Postres", ext);
-                    //Agregar el postre al menu, lista de venta y lista de compras
-                    menu.agrega_alimento(aux);
-                    vbst.add(nom, ven);
-                    pbst.add(nom, prec);
-                //Default para opcion invalida
-                } else
+                //Opcion invalida
+                if (op < 1 || op > 3)
                     std::cout << "Opcion invalida";
+                else{
+                    std::cout << "Nombre del alimento: ";
+                    std::cin >> nom;
+                    std::cout << "Vendidos hasta el momento: ";
+                    std::cin >> ven;
+                    std::cout << "Precio: ";
+                    std::cin >> prec;
+                    if (op == 1){
+                        //Opcion de bebida
+                        std::cout << "Temperatura: ";
+                        std::cin >> ext;
+                        Alimentos * aux  = new Bebidas(nom, ven, prec, "Bebidas", ext);
+                        Ali * auxil = new Ali(nom, ven, prec, "Bebidas", ext);
+                        //Agregar el bebida al menu, lista de venta, lista de compras y archivo csv
+                        menu.agrega_alimento(aux);
+                        vbst.add(nom, ven);
+                        pbst.add(nom, prec);
+                        auxil->writeToCSV("platillos.csv", auxil);
+                        std::cout << "Los datos se han escrito correctamente en el archivo." << std::endl;
+                    } else if (op == 2){
+                        //Opcion de comida
+                        std::cout << "Tipos: ";
+                        std::cin >> ext;
+                        Alimentos * aux  = new Comidas(nom, ven, prec, "Comidas", ext);
+                        Ali * auxil = new Ali(nom, ven, prec, "Comidas", ext);
+                        //Agregar el comida al menu, lista de venta, lista de compras y archivo csv
+                        menu.agrega_alimento(aux);
+                        vbst.add(nom, ven);
+                        pbst.add(nom, prec);
+                        auxil->writeToCSV("platillos.csv", auxil);
+                        std::cout << "Los datos se han guardado correctamente" << std::endl;
+                    } else if (op == 3){
+                        //Opcion de postre
+                        std::cout << "Sabores: ";
+                        std::cin >> ext;
+                        Alimentos * aux = new Postres(nom, ven, prec, "Postres", ext);
+                        Ali * auxil = new Ali(nom, ven, prec, "Postres", ext);
+                        //Agregar el postre al menu, lista de venta, lista de compras y archivo csv
+                        menu.agrega_alimento(aux);
+                        vbst.add(nom, ven);
+                        pbst.add(nom, prec);
+                        auxil->writeToCSV("platillos.csv", auxil);
+                        std::cout << "Los datos se han guardado correctamente." << std::endl;
+                    }
+                }
             break;
             case 3:
                 //Elegir como mostrar las ventas
                 op = ordenapor();
-
-                //Opcion para ver todos los alimentos
-                if(op == 1){
                     //Bucles para recorrer todo el vector
-                    for(int i = 0; i < v.size(); i++)
-                        for(int j = 0; j < contador; j++)
-                            //Condicional para ver el objeto
-                            if(v[i - 1] != v[i] && v[i] == menu.alim[j]->get_vendidas())
-                                menu.alim[j]->imprime();
-                //Opcion para ver las bebidas
-                } else if(op == 2){
-                    //Bucles para recorrer todo el vector
-                    for(int i = 0; i < v.size(); i++)
-                        for(int j = 0; j < contador; j++)
-                            //Condicional para ver el objeto si este es una bebida
-                            if(v[i - 1] != v[i] && v[i] == menu.alim[j]->get_vendidas() && menu.alim[j]->get_tipo() == "Bebidas")
-                                menu.alim[j]->imprime();
-                //Opcion para ver las comidas
-                } else if(op == 3){
-                    //Bucles para recorrer todo el vector
-                    for(int i = 0; i < v.size(); i++)
-                        for(int j = 0; j < contador; j++)
-                        //Condicional para ver el objeto si este es una comida
-                            if(v[i - 1] != v[i] && v[i] == menu.alim[j]->get_vendidas() && menu.alim[j]->get_tipo() == "Comidas")
-                                menu.alim[j]->imprime();
-                //Opcion para ver los postres
-                } else if(op == 4){
-                    //Bucles para recorrer todo el vector
-                    for(int i = 0; i < v.size(); i++)
-                        for(int j = 0; j < contador; j++)
-                            //Condicional para ver el objeto si este es un postre
-                            if(v[i - 1] != v[i] && v[i] == menu.alim[j]->get_vendidas() && menu.alim[j]->get_tipo() == "Postres")
-                                menu.alim[j]->imprime();
-                //Default para opcion invalida
-                } else
-                    std::cout << "Opcion no valida";
+                for(int i = 0; i < v.size(); i++)
+                    for(int j = 0; j < contador; j++)
+                        //Condicionales para ver el objeto
+                        //Todos
+                        if(op == 1 && v[i - 1] != v[i] && v[i] == menu.alim[j]->get_vendidas())
+                            menu.alim[j]->imprime();
+                        //Bebidas
+                        else if(op == 2 && v[i - 1] != v[i] && v[i] == menu.alim[j]->get_vendidas() && menu.alim[j]->get_tipo() == "Bebidas")
+                            menu.alim[j]->imprime();
+                        //Comidas
+                        else if(op == 3 && v[i - 1] != v[i] && v[i] == menu.alim[j]->get_vendidas() && menu.alim[j]->get_tipo() == "Comidas")
+                            menu.alim[j]->imprime();
+                        //Postres
+                        else if(op == 4 && v[i - 1] != v[i] && v[i] == menu.alim[j]->get_vendidas() && menu.alim[j]->get_tipo() == "Postres")
+                            menu.alim[j]->imprime();
+                        //Opción inválida
+                        else if (op < 1 || op > 4)
+                            std::cout << "Opcion no valida";
             break;
             case 4:
                 //Elegir como mostrar los precios
                 op = ordenapor();
 
-                //Opcion para ver todos los alimentos
-                if(op == 1){
-                    //Bucles para recorrer todo el vector
-                    for(int i = 0; i < p.size(); i++)
-                        for(int j = 0; j < contador; j++)
-                            //Condicional para ver el objeto
-                            if(p[i - 1] != p[i] && p[i] == menu.alim[j]->get_precio())
-                                menu.alim[j]->imprime();
-                //Opcion para ver las bebidas
-                } else if(op == 2){
-                    //Bucles para recorrer todo el vector
-                    for(int i = 0; i < p.size(); i++)
-                        for(int j = 0; j < contador; j++)
-                            //Condicional para ver el objeto si este es una bebida
-                            if(p[i - 1] != p[i] && p[i] == menu.alim[j]->get_precio() && menu.alim[j]->get_tipo() == "Bebidas")
-                                menu.alim[j]->imprime();
-                //Opcion para ver las comidas
-                } else if(op == 3){
-                    //Bucles para recorrer todo el vector
-                    for(int i = 0; i < p.size(); i++)
-                        for(int j = 0; j < contador; j++)
-                            //Condicional para ver el objeto si este es una comida
-                            if(p[i - 1] != p[i] && p[i] == menu.alim[j]->get_precio() && menu.alim[j]->get_tipo() == "Comidas")
-                                menu.alim[j]->imprime();
-                //Opcion para ver los postres
-                } else if(op == 4){
-                    //Bucles para recorrer todo el vector
-                    for(int i = 0; i < p.size(); i++)
-                        for(int j = 0; j < contador; j++)
-                            //Condicional para ver el objeto si este es un postre
-                            if(p[i - 1] != p[i] && p[i] == menu.alim[j]->get_precio() && menu.alim[j]->get_tipo() == "Postres")
-                                menu.alim[j]->imprime();
-                //Default para opcion invalida
-                } else
-                    std::cout << "Opcion no valida";
+                //Bucles para recorrer todo el vector
+                for(int i = 0; i < p.size(); i++)
+                    for(int j = 0; j < contador; j++)
+                        //Condicionales para ver el objeto
+                        //Todos
+                        if(op == 1 && p[i - 1] != p[i] && p[i] == menu.alim[j]->get_precio())
+                            menu.alim[j]->imprime();
+                        //Bebidas
+                        else if(op == 2 && p[i - 1] != p[i] && p[i] == menu.alim[j]->get_precio() && menu.alim[j]->get_tipo() == "Bebidas")
+                            menu.alim[j]->imprime();
+                        //Comidas
+                        else if(op == 3 && p[i - 1] != p[i] && p[i] == menu.alim[j]->get_precio() && menu.alim[j]->get_tipo() == "Comidas")
+                            menu.alim[j]->imprime();
+                        //Postres
+                        else if(op == 4 && p[i - 1] != p[i] && p[i] == menu.alim[j]->get_precio() && menu.alim[j]->get_tipo() == "Postres")
+                            menu.alim[j]->imprime();
+                        //Opción inválida
+                        else if (op < 1 || op > 4)
+                            std::cout << "Opcion no valida";
             break;
             //Opcion para buscar un alimento por su precio
             case 5:
@@ -326,6 +246,4 @@ int main(){
                 std::cout << "Opcion no valida";
         }
     }
-    
-    return 0;
 }
