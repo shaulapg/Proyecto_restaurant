@@ -52,7 +52,8 @@ LECTURA DE ARCHIVO (for)
 Complejidad temporal: O(m)
 
 Commplejidad espacial total: O(2n)
-Commplejidad temporal total (Peor de los casos): O(3n + 3n log(n) + O(m))
+
+Complejidad temporal total (Peor de los casos): O(3n + 3n log(n) + O(m))
 
   # Versiones
 Version 1: se agregaron clases: menu, alimentos, comidas, bebidas y postres. Se agregó main con opciones para visualizacion del menu, usando ordenamiento tipo Bubble (SICT0302: Toma decisiones). Complejidad en comentarios de merge sort [sorts.h] (SICT0301: Evalúa los componentes). Se eligió "Merge Sort" por ser una opción eficiente y rápida.
