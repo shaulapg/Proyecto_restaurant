@@ -31,21 +31,27 @@ BST: Dos Árboles para mostrar elementos, uno por precio y otro por ventas (opci
 MERGE SORT
 Complejidad Espacial: O(n)
 Complejidad Temporal:
- * 		Mejor: Ω(n log(n))
- * 		Promedio: Θ(n log(n))
- * 		Peor: O(n log(n))
+- Mejor: Ω(n log(n))
+- Promedio: Θ(n log(n))
+- Peor: O(n log(n))
 
 BST
 Complejidad Espacial O(n)
 Complejidad Temporal:
    Promedio:
- * 		Acceso: Θ(log(n))
- * 		Busqueda: Θ(log(n))
- * 		Insercion: Θ(log(n))
+- Acceso: Θ(log(n))
+- Busqueda: Θ(log(n))
+- Insercion: Θ(log(n))
    Peor:
- * 		Acceso: O(n)
- * 		Busqueda: O(n)
- * 		Insercion: O(n)
+- Acceso: O(n)
+- Busqueda: O(n)
+- Insercion: O(n)
+
+LECTURA DE ARCHIVO (for)
+Complejidad temporal: O(m)
+
+Commplejidad espacial total: O(2n)
+Commplejidad temporal total (Peor de los casos): O(3n + 3n log(n) + O(m))
 
   # Versiones
 Version 1: se agregaron clases: menu, alimentos, comidas, bebidas y postres. Se agregó main con opciones para visualizacion del menu, usando ordenamiento tipo Bubble (SICT0302: Toma decisiones). Complejidad en comentarios de merge sort [sorts.h] (SICT0301: Evalúa los componentes). Se eligió "Merge Sort" por ser una opción eficiente y rápida.
