@@ -24,6 +24,7 @@ El programa solo corre en la consola y esta hecho con c++ standard por lo que co
 
 # Usos:
 Merge sort: Dos sorts, uno para buscar un elemento por precio y otro para buscarlo por ventas (opción 5 y 6 del menú)
+
 BST: Dos Árboles para mostrar elementos, uno por precio y otro por ventas (opción 3 y 4 del menú)
 
 # Complejidad
